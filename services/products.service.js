@@ -18,17 +18,12 @@ export class ProductsServcie {
     return product
   }
 
-
   listproducts = async(productId) => {
-    
-    
+
     const listproduct = await this.productsRepositoy.listproduct(productId);
-
     return listproduct
-    
-  
-
   }
+
   updateproduct =async(productId,title,description,status,UserId)=>{
     if (!title && !description && !status) {
       const error = new Error('수정 정보는 최소 한 가지 이상이어야 합니다.') 
