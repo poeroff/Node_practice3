@@ -3,9 +3,10 @@ export class UserController {
   searchuser = async (req, res, next) => {
     try {
       const me = res.locals.user;
+      console.log(me)
       const post = await prisma.User.findFirst(
         {
-          where: { UserId: me.userId },
+          where: { UserId: me.UserId },
           select: {
             UserId: true,
             email: true,
