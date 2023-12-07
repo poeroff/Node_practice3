@@ -13,16 +13,17 @@ export class Authcontroller {
             const { email, password, passwordConfirm, name } = req.body;
 
             const createdUser = await this.authServcie.createUser(email , password, passwordConfirm, name)
+            console.log(createdUser)
             return res.status(201).json({
                 success: true,
                 message: '회원가입에 성공했습니다.',
                 data: createdUser,
             });
         } catch (error) {
-            console.error(error);
+           
             return res.status(500).json({
-                success: false,
-                message: '예상치 못한 에러가 발생하였습니다. 관리자에게 문의하세요.',
+                success: error.success,
+                message: error.message
             });
         }
     }
@@ -39,10 +40,10 @@ export class Authcontroller {
                 data: { accessToken },
             });
         } catch (error) {
-            console.error(error);
+          
             return res.status(500).json({
-                success: false,
-                message: '예상치 못한 에러가 발생하였습니다. 관리자에게 문의하세요.',
+                success: error.success,
+                message: error.message
             });
         }
     }
