@@ -20,7 +20,7 @@ export class UserController {
         data: post
       });
     } catch (error) {
-      console.error(error);
+      
       return res.status(500).json({
         success: false,
         message: '예상치 못한 에러가 발생하였습니다. 관리자에게 문의하세요.',
