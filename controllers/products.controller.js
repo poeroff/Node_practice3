@@ -3,12 +3,12 @@ import { prisma } from "../util/prisma/index.js";
 
 
 export class ProductsController {
-    productsServcie = new ProductsServcie();
+    productsService = new ProductsServcie();
     createproduct = async(req,res,next)=>{
         try {
             const { UserId: UserId, name: name } = res.locals.user;
             const { title, description } = req.body;
-            const createProduct = await this.productsServcie.createProduct(title,description,UserId,name)
+            const createProduct = await this.productsService.createProduct(title,description,UserId,name)
             return res.status(201).json({
               success: true,
               message: '상품 생성에 성공했습니다.',
@@ -23,6 +23,8 @@ export class ProductsController {
     }
     searchproduct = async(req,res,next)=>{
         try {
+
+          const searchproduct =  await this.productsService.searchproduct();
             const products = await prisma.Products.findMany({
               select: {
                 productId: true,
@@ -51,7 +53,7 @@ export class ProductsController {
     listproduct = async(req,res,next)=>{
         try {
             const { productId } = req.params;
-            const listproduct = await this.productsServcie.listproducts(productId)
+            const listproduct = await this.productsService.listproducts(productId)
             return res.status(200).json({
               success: true,
               message: '상품 목록 조회에 성공했습니다.',
@@ -71,7 +73,7 @@ export class ProductsController {
             const { title, description, status } = req.body;
             const { UserId: UserId, name: name } = res.locals.user;
 
-            const updateproduct = await this.productsServcie.updateproduct(productId,title,description,status,UserId,name);
+            const updateproduct = await this.productsService.updateproduct(productId,title,description,status,UserId,name);
            
             return res.status(200).json({
               success: true,
@@ -92,7 +94,7 @@ export class ProductsController {
             const { UserId: UserId, name: name } = res.locals.user;
 
 
-            const deleteproduct = await this.productsServcie.deleteProduct(productId, UserId)
+            const deleteproduct = await this.productsService.deleteProduct(productId, UserId)
 
             return res.status(200).json({
               success: true,

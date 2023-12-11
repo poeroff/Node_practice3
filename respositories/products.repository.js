@@ -5,6 +5,22 @@ export class ProductsRepositoy {
         return product
     }
 
+    searchproduct = async() =>{
+        const searchproduct = await prisma.Products.findMany({
+            select: {
+              productId: true,
+              title: true,
+              userId : true,
+              description : true,
+              userName : true,
+              createdAt: true,
+              updatedAt: true,
+            },
+            orderBy: {createdAt :  'desc'},
+          });
+        return searchproduct
+    }
+
     listproduct = async (productId) => {
         const product = await prisma.Products.findFirst({ where: { productId: +productId } });
         if (!product) {

@@ -18,6 +18,13 @@ export class ProductsServcie {
     return product
   }
 
+
+  searchproduct = async() =>{
+    const searchproduct = this.productsRepositoy.searchproduct();
+    return searchproduct
+
+  }
+
   listproducts = async(productId) => {
 
     const listproduct = await this.productsRepositoy.listproduct(productId);
@@ -25,10 +32,16 @@ export class ProductsServcie {
   }
 
   updateproduct =async(productId,title,description,status,UserId)=>{
-    if (!title && !description && !status) {
+    if ( (typeof title !== "String" ||  !title ) || (typeof description !== "String" || !description) ||  (typeof status !== "String" || !status)) {
       const error = new Error('수정 정보는 최소 한 가지 이상이어야 합니다.') 
       error.success = false;
       throw error;
+    }
+    if (title === undefined && description === undefined && status === undefined){
+      const error = new Error('수정 정보는 최소 한 가지 이상이어야 합니다.') 
+      error.success = false;
+      throw error;
+
     }
     const isValidStatus = status
       ? status === 'FOR_SALE' || status === 'SOLD_OUT'

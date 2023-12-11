@@ -1,24 +1,17 @@
-import { prisma } from "../util/prisma/index.js"
+
+import { UserService } from "../services/userSearch.service.js";
 export class UserController {
+  userService = new UserService();
   searchuser = async (req, res, next) => {
+  
+    
     try {
       const me = res.locals.user;
-      console.log(me)
-      const post = await prisma.User.findFirst(
-        {
-          where: { UserId: me.UserId },
-          select: {
-            UserId: true,
-            email: true,
-            name: true,
-            createdAt: true,
-            updatedAt: true,
-          }
-        })
+      const searchuser = await this.userService.searchuser(me)
       return res.status(200).json({
         success: true,
         message: '내 정보 조회에 성공했습니다.',
-        data: post
+        data: searchuser
       });
     } catch (error) {
       

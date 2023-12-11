@@ -6,13 +6,13 @@ import { Authservice } from "../services/auth.service.js";
 
 
 export class Authcontroller {
-    authServcie = new Authservice();
+    authService = new Authservice();
 
     signup = async (req, res, next) => {
         try {
             const { email, password, passwordConfirm, name } = req.body;
 
-            const createdUser = await this.authServcie.createUser(email , password, passwordConfirm, name)
+            const createdUser = await this.authService.createUser(email , password, passwordConfirm, name)
             console.log(createdUser)
             return res.status(201).json({
                 success: true,
@@ -20,7 +20,7 @@ export class Authcontroller {
                 data: createdUser,
             });
         } catch (error) {
-           
+            console.log(error.message)
             return res.status(500).json({
                 success: error.success,
                 message: error.message
@@ -32,7 +32,7 @@ export class Authcontroller {
         try {
             const { email, password } = req.body;
             
-            const accessToken =  await this.authServcie.SigninUser(email,password)
+            const accessToken =  await this.authService.SigninUser(email,password)
      
             return res.status(200).json({
                 success: true,

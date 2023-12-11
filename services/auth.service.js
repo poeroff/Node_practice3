@@ -43,9 +43,7 @@ export class Authservice{
             const error = new Error('올바른 이메일 형식이 아닙니다.') 
             error.success = false;
             throw error;
-           
         }
-     
         const createdPost = await this.userRespos.createUser(email ,password, name)
         return createdPost
     }
